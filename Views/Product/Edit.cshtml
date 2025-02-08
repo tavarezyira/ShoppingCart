@@ -4,32 +4,44 @@
     ViewData["Title"] = "Edit Product";
 }
 
-<h2>Edit Product</h2>
+<div class="container mt-4">
+    <h2 class="text-center text-warning fw-bold">✏️ Edit Product</h2>
 
-<form asp-action="Edit" enctype="multipart/form-data" method="post">
-    <img src="@ViewBag.viewImage" alt="Product Image" style="max-width: 300px;"/>
-    <div class="form-group">
-        <label asp-for="ProductName" class="control-label"></label>
-        <input asp-for="ProductName" class="form-control" />
-        <span asp-validation-for="ProductName" class="text-danger"></span>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                    <div class="text-center mb-3">
+                        <img src="@ViewBag.viewImage" alt="Product Image" class="img-fluid rounded shadow-sm" style="max-width: 200px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="fw-bold"></label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Price" class="fw-bold"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ProductImage" class="fw-bold">Upload Image</label>
+                        <input type="file" id="imageFile" name="imageFile" class="form-control-file" />
+                        <span asp-validation-for="ProductImage" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-warning mx-2">✅ Update</button>
+                        <a asp-action="Index" class="btn btn-secondary">↩ Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Price" class="control-label"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ProductImage" class="control-label">Upload Image</label>
-        <input type="file" id="imageFile" name="imageFile" class="form-control-file" />
-        <span asp-validation-for="ProductImage" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <button type="submit" value="Edit" class="btn btn-primary">Update Product</button>
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-    </div>
-    <input type="hidden" asp-for="ProductImage" value="@ViewBag.viewImage" />
-    <img id="imagePreview" class="preview" src="#" alt="New Selected Image" style="max-width: 300px;"/>
-</form>
+</div>
 
 @section Scripts {
     <script>
@@ -50,6 +62,5 @@
             }
         });
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-   
 }
+

@@ -1,44 +1,56 @@
 @using System.Globalization
 @model IEnumerable<Item>
 
-<h2>Shopping Cart</h2>
-<img src="~/images/Cart.jpg" alt="My Shopping Cart" style="max-width: 150px; height: auto;"/>
+<div class="container-fluid mt-4">
+    <h2 class="text-center text-primary fw-bold">🛒 Shopping Cart</h2>
+    
+    <div class="text-center mb-3">
+        <img src="~/images/Cart.jpg" alt="My Shopping Cart" class="img-fluid rounded shadow" style="max-width: 120px;">
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Product Image</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                 <td>
-                    @if (!string.IsNullOrEmpty(item.Product?.ProductImage))
-                    {
-                        <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" style="max-width: 100px;" />
-                    }
-                    else
-                    {
-                        <span>No Image</span>
-                    }
-                </td>
-                <td>@item.Name</td>
-                <td>@item.Quantity</td>
-                <td>@item.Price.ToString("C", new CultureInfo("en-US"))</td>
-                <td>@((item.Quantity * item.Price).ToString("C", new CultureInfo("en-US")))</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<h3>Total Price: @Model.Sum(i => i.Quantity * i.Price).ToString("C", new CultureInfo("en-US"))</h3>
+    <!-- Contenedor con Scroll -->
+    <div class="table-responsive" style="max-height: 65vh; overflow-y: auto;">
+        <table class="table table-bordered shadow">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th class="text-center">Product Image</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @if (!string.IsNullOrEmpty(item.Product?.ProductImage))
+                            {
+                                <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" class="img-fluid rounded" style="max-width: 60px; height: auto;">
+                            }
+                            else
+                            {
+                                <span>No Image</span>
+                            }
+                        </td>
+                        <td class="align-middle">@item.Name</td>
+                        <td class="align-middle">@item.Quantity</td>
+                        <td class="align-middle text-success">@item.Price.ToString("C", new CultureInfo("en-US"))</td>
+                        <td class="align-middle text-danger fw-bold">@((item.Quantity * item.Price).ToString("C", new CultureInfo("en-US")))</td>
+                        <td class="align-middle text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">✏️ Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Total del Carrito -->
+    <div class="text-end mt-3">
+        <h3 class="fw-bold">Total Price: <span class="text-success">@Model.Sum(i => i.Quantity * i.Price).ToString("C", new CultureInfo("en-US"))</span></h3>
+    </div>
+</div>

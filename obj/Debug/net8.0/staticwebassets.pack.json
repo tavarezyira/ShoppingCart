@@ -21,12 +21,36 @@
       "PackagePath": "staticwebassets\\images\\bread_5ad72ab7-c535-4691-943b-f7c422ab1675.jpg"
     },
     {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\bread_6544a64a-0838-46cf-b2b5-1895e54aadfd.jpg",
+      "PackagePath": "staticwebassets\\images\\bread_6544a64a-0838-46cf-b2b5-1895e54aadfd.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\camera_130c3539-41b6-489f-ab9b-72dc28006944.jpg",
+      "PackagePath": "staticwebassets\\images\\camera_130c3539-41b6-489f-ab9b-72dc28006944.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\camera_d95d4797-7d6d-4a6b-88a5-adc4bebd7058.jpg",
+      "PackagePath": "staticwebassets\\images\\camera_d95d4797-7d6d-4a6b-88a5-adc4bebd7058.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\computer-mouse_329cc25d-b249-4f22-9032-a83059cd8f1d.png",
+      "PackagePath": "staticwebassets\\images\\computer-mouse_329cc25d-b249-4f22-9032-a83059cd8f1d.png"
+    },
+    {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\milk_90431316-f493-45cc-9cc7-af61c7a8e22b.jpg",
+      "PackagePath": "staticwebassets\\images\\milk_90431316-f493-45cc-9cc7-af61c7a8e22b.jpg"
+    },
+    {
       "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\products.jpg",
       "PackagePath": "staticwebassets\\images\\products.jpg"
     },
     {
       "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\shoppingMain.jpg",
       "PackagePath": "staticwebassets\\images\\shoppingMain.jpg"
+    },
+    {
+      "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\vintage-tv_fa9629de-e796-4f17-bdd1-56a26415e82b.jpg",
+      "PackagePath": "staticwebassets\\images\\vintage-tv_fa9629de-e796-4f17-bdd1-56a26415e82b.jpg"
     },
     {
       "Id": "C:\\Projects\\ShoppingCartApp\\wwwroot\\js\\site.js",
