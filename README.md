@@ -16,6 +16,5 @@ Shopping Cart Web Application is a simple and intuitive e-commerce platform buil
 - **C#**
 - **Entity Framework Core**
 - **Bootstrap 5**
-- **JavaScript / jQuery**
 - **CSS3 & HTML5**
 - **SQLite**
