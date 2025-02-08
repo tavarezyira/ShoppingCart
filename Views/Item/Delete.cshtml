@@ -1,0 +1,23 @@
+@model Item
+
+<h2>Delete Item from Cart</h2>
+
+<form asp-action="Delete" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" readonly />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" readonly />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" readonly />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <button type="submit" value="Delete" class="btn btn-danger">Delete from Cart</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

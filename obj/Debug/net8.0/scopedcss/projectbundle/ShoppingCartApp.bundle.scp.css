@@ -1,0 +1,81 @@
+/* _content/ShoppingCartApp/Views/Shared/_Layout.cshtml.rz.scp.css */
+a.navbar-brand[b-4leawno0yt] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+  color: #bfc7cf; /* Modern Blue */
+  font-weight: bold;
+}
+
+a[b-4leawno0yt] {
+  color: #0056b3; /* Darker Blue */
+  text-decoration: none;
+}
+
+a:hover[b-4leawno0yt] {
+  color: #003d80; /* Even Darker Blue */
+  text-decoration: underline;
+}
+
+.btn-primary[b-4leawno0yt] {
+  color: #fff;
+  background-color: #007bff; /* Modern Blue */
+  border-color: #0056b3; /* Darker Blue */
+}
+
+.btn-primary:hover[b-4leawno0yt] {
+  background-color: #0056b3; /* Darker Blue */
+  border-color: #003d80; /* Even Darker Blue */
+}
+
+.nav-pills .nav-link.active[b-4leawno0yt],
+.nav-pills .show > .nav-link[b-4leawno0yt] {
+  color: #fff;
+  background-color: #28a745; /* Modern Green */
+  border-color: #218838; /* Darker Green */
+}
+
+.nav-pills .nav-link[b-4leawno0yt] {
+  color: #28a745; /* Modern Green */
+}
+
+.nav-pills .nav-link:hover[b-4leawno0yt] {
+  background-color: #218838; /* Darker Green */
+  color: #fff;
+}
+
+.border-top[b-4leawno0yt] {
+  border-top: 1px solid #dee2e6; /* Light Gray */
+}
+.border-bottom[b-4leawno0yt] {
+  border-bottom: 1px solid #dee2e6; /* Light Gray */
+}
+
+.box-shadow[b-4leawno0yt] {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1); /* Subtle Shadow */
+}
+
+button.accept-policy[b-4leawno0yt] {
+  font-size: 1rem;
+  line-height: inherit;
+  background-color: #17a2b8; /* Modern Cyan */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+button.accept-policy:hover[b-4leawno0yt] {
+  background-color: #138496; /* Darker Cyan */
+}
+
+.footer[b-4leawno0yt] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #343a40; /* Dark Gray */
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+  font-weight: bold;
+}
