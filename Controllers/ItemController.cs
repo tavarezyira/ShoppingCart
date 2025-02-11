@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ShoppingCartApp.Models;
 using System;
+
 public class ItemController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -18,13 +19,13 @@ public class ItemController : Controller
     public async Task<IActionResult> Index()
     {
          var items = await _context.Items
-            .Include(i => i.Product) // Ensure Product is included
+            .Include(i => i.Product)
             .ToListAsync();
 
         return View(items);
     }
     
-    // Create initial view for Items from selecting a productId
+    // GET: Items/Create (para agregar un producto al carrito)
     public IActionResult Create(int? productId)
     {
         if (productId == null)
@@ -40,12 +41,11 @@ public class ItemController : Controller
 
         var itemViewModel = new Item
         {
-            
             Name = product.ProductName,
             Price = product.Price,
             ProductId = product.Id,
             Product = product,
-            Quantity = 1 // Default quantity
+            Quantity = 1
         };
 
         return View(itemViewModel);
@@ -63,13 +63,6 @@ public class ItemController : Controller
             return RedirectToAction(nameof(Index));
         }
             
-        // Log or inspect validation errors
-        var errors = ModelState.Values.SelectMany(v => v.Errors);
-        foreach (var error in errors)
-        {
-            Console.WriteLine(error.ErrorMessage);
-        }
-        
         return View(item);
     }
 
@@ -82,7 +75,6 @@ public class ItemController : Controller
         }
 
         var item = await _context.Items.Include(i => i.Product).FirstOrDefaultAsync(m => m.Id == id);
-
         if (item == null)
         {
             return NotFound();
@@ -124,7 +116,7 @@ public class ItemController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ItemExists(item.Id))
+                if (!_context.Items.Any(e => e.Id == item.Id))
                 {
                     return NotFound();
                 }
@@ -138,7 +130,6 @@ public class ItemController : Controller
         return View(item);
     }
 
-
     // GET: Items/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
@@ -147,8 +138,7 @@ public class ItemController : Controller
             return NotFound();
         }
 
-        var item = await _context.Items
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var item = await _context.Items.FirstOrDefaultAsync(m => m.Id == id);
         if (item == null)
         {
             return NotFound();
@@ -166,10 +156,5 @@ public class ItemController : Controller
         _context.Items.Remove(item);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
-    }
-
-    private bool ItemExists(int id)
-    {
-        return _context.Items.Any(e => e.Id == id);
     }
 }

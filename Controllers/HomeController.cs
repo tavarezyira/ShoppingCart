@@ -14,8 +14,8 @@ public class HomeController : Controller
 
     public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
-        _context = context;
         _logger = logger;
+        _context = context;
     }
 
     public async Task<IActionResult> Index()

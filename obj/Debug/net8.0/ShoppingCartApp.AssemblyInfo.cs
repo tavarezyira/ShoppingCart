@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShoppingCartApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ae2a6886a65e99c0be08d3453ee0776c5ba2b9d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd54367c9789775caef9eed6f29c4ab4b05ef90d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShoppingCartApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShoppingCartApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

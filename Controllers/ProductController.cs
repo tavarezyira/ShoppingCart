@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ShoppingCartApp.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
+
+namespace ShoppingCartApp.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -42,13 +47,11 @@ public class ProductController : Controller
 
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
 
-                // Save the file to the specified path
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
                 }
 
-                // Save the file path to the database
                 product.ProductImage = "/images/" + uniqueFileName;
             }
             else
@@ -64,7 +67,7 @@ public class ProductController : Controller
         return View(product);
     }
 
-    // GET: Products/Edit
+    // GET: Products/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -72,8 +75,7 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        var product = await _context.Products
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
         if (product == null)
         {
             return NotFound();
@@ -94,14 +96,12 @@ public class ProductController : Controller
             var uniqueFileName = $"{fileName}{extension}";
 
             var newFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
-            //filePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
-
             using (var fileStream = new FileStream(newFilePath, FileMode.Open, FileAccess.Read))
             {
                 var formFile = new FormFile(fileStream, 0, fileStream.Length, Path.GetFileNameWithoutExtension(newFilePath), Path.GetFileName(newFilePath))
                 {
                     Headers = new HeaderDictionary(),
-                    ContentType = "application/octet-stream" // Adjust MIME type if needed
+                    ContentType = "application/octet-stream"
                 };
 
                 return formFile;
@@ -110,13 +110,10 @@ public class ProductController : Controller
         catch (Exception ex)
         {
             Console.WriteLine($"Error accessing file: {ex.Message}");
-            throw; // Rethrow or handle the exception as needed
+            throw;
         }
-
     }
 
-    // public async Task<IActionResult> Edit(int id, [Bind("Id,ProductName,Price,ProductImage")] Product product, ProductEditViewModel model)
-    // POST: Products/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Product product, IFormFile imageFile)
@@ -138,13 +135,11 @@ public class ProductController : Controller
 
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", uniqueFileName);
 
-                    // Save the file to the specified path
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(stream);
                     }
 
-                    // Save the file path to the database
                     product.ProductImage = "/images/" + uniqueFileName;
                 }
 
@@ -153,7 +148,7 @@ public class ProductController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(product.Id))
+                if (!_context.Products.Any(e => e.Id == product.Id))
                 {
                     return NotFound();
                 }
@@ -175,8 +170,7 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        var product = await _context.Products
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
         if (product == null)
         {
             return NotFound();
@@ -194,10 +188,5 @@ public class ProductController : Controller
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
-    }
-
-    private bool ProductExists(int id)
-    {
-        return _context.Products.Any(e => e.Id == id);
     }
 }
