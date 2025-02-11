@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 namespace ShoppingCartApp.Models;
 
 public class Product
@@ -12,5 +11,10 @@ public class Product
     [Required]
     [Range(0.01, 10000.00)]
     public decimal Price { get; set; }
+    
     public string ProductImage { get; set; }
+
+    // Nueva propiedad para la descripción del chocolate
+    [Required]
+    public string Description { get; set; }
 }
