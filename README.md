@@ -30,6 +30,11 @@ ShoppingCartApp is a CRUD-based shopping cart web application that allows users 
 - Git & GitHub for version control
 - Visual Studio Code / Visual Studio
 
+## 🎥 Demo Video
+
+👉 [Watch the ShoppingCartApp Demo](https://www.canva.com/design/DAGe9BKpv70/5uuuMtxH9pOh_SYtU3d9QQ/edit?utm_content=DAGe9BKpv70&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
+
 ## 📂 Installation & Setup
 
 ### 🔹 Prerequisites
