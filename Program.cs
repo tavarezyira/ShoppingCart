@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using System;
 
 class Program
 {
@@ -18,20 +19,28 @@ class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite("Data Source=shoppingcart.db"));
 
-        // Registrar servicio para el carrito
-        builder.Services.AddScoped<CartService>();
 
         // Configurar la autenticación: cookies y Google OAuth
-        builder.Services.AddAuthentication(options =>
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
         {
-            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            options.LoginPath = "/Account/CustomerLogin";
+            options.LogoutPath = "/Account/Logout";
+            options.AccessDeniedPath = "/Account/CustomerLogin";
         })
-        .AddCookie()
         .AddGoogle(options =>
         {
-            options.ClientId = "TU_CLIENT_ID_GOOGLE";
-            options.ClientSecret = "TU_CLIENT_SECRET_GOOGLE";
+            var googleClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
+            var googleClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET");
+
+            if (string.IsNullOrEmpty(googleClientId) || string.IsNullOrEmpty(googleClientSecret))
+            {
+                throw new Exception("Google OAuth Client ID or Secret is missing. Set environment variables.");
+            }
+
+            options.ClientId = googleClientId;
+            options.ClientSecret = googleClientSecret;
+            options.CallbackPath = "/signin-google";
         });
 
         builder.Services.AddAuthorization();
@@ -50,7 +59,7 @@ class Program
 
         app.UseRouting();
 
-        app.UseAuthentication(); // Debe ir antes de UseAuthorization
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(

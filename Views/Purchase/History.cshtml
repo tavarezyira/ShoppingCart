@@ -1,0 +1,49 @@
+@model IEnumerable<ShoppingCartApp.Models.PurchaseHistory>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Historial de Compras";
+}
+
+<h2 class="text-center my-4">Historial de Compras</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">
+        No tienes compras registradas.
+    </div>
+}
+else
+{
+    foreach (var purchase in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Compra realizada el @purchase.PurchaseDate.ToString("dd/MM/yyyy HH:mm")
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in purchase.PurchaseItems)
+                        {
+                            <tr>
+                                <td>@item.Product.ProductName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.PriceAtPurchase.ToString("C", new CultureInfo("en-US"))</td>
+                                <td>@(item.Quantity * item.PriceAtPurchase).ToString("C", new CultureInfo("en-US"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

@@ -13,4 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<WishlistItem> WishlistItems { get; set; }
     public DbSet<PurchaseHistory> PurchaseHistories { get; set; }
     public DbSet<PurchaseItem> PurchaseItems { get; set; }
+    
+
+    public DbSet<Customer> Customers { get; set; }
 }

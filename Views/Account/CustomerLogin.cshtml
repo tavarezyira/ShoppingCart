@@ -1,0 +1,74 @@
+@model ShoppingCartApp.Models.CustomerLoginViewModel
+@{
+    ViewData["Title"] = "Customer Login";
+    string returnUrl = ViewData["ReturnUrl"] as string ?? "/";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h2>Customer Login</h2>
+                </div>
+                <div class="card-body">
+                    
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    <form asp-action="CustomerLogin" method="post">
+                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" class="form-control" type="password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+
+                    <!-- Google Sign-In -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-danger w-100">
+                            <i class="fab fa-google"></i> <a asp-controller="Account" asp-action="GoogleLogin" class="btn btn-danger">Sign in with Google</a>
+                        </button>
+                    </div>
+
+                    <!-- Link to Register -->
+                    <div class="text-center mt-3">
+                        <a asp-controller="Account" asp-action="CustomerRegister" class="text-primary">
+                            Do not have an account? Register
+                        </a>
+                    </div>
+
+                    <!-- Admin Login Button -->
+                    <div class="text-center mt-3">
+                        <a asp-controller="Account" asp-action="AdminLogin" class="btn btn-dark w-100">Admin Login</a>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <small class="text-muted">Antique Store Customer Login</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

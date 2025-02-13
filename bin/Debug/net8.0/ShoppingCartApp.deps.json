@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "ShoppingCartApp/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": "8.0.0-preview.7.23375.9",
           "Microsoft.EntityFrameworkCore.Design": "9.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.1",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.1"
@@ -21,6 +22,14 @@
           "lib/net6.0/Humanizer.dll": {
             "assemblyVersion": "2.14.0.0",
             "fileVersion": "2.14.1.48190"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/8.0.0-preview.7.23375.9": {
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.37509"
           }
         }
       },
@@ -828,6 +837,13 @@
       "sha512": "sha512-lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Google/8.0.0-preview.7.23375.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VDXT3numpEJhSXsUxXNT7Ke9T8c2GsRrDPAnq/breK7Yd5tL4Rgm3wsz4s+CPfuoTsE8F6U0vaC2WVxuyigLAA==",
+      "path": "microsoft.aspnetcore.authentication.google/8.0.0-preview.7.23375.9",
+      "hashPath": "microsoft.aspnetcore.authentication.google.8.0.0-preview.7.23375.9.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
       "type": "package",

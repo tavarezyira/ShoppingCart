@@ -157,3 +157,4 @@ C:\Projects\ShoppingCartApp\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.
 C:\Projects\ShoppingCartApp\obj\Debug\net8.0\ShoppingCartApp.csproj.AssemblyReference.cache
 C:\Projects\ShoppingCartApp\obj\Debug\net8.0\Shopping.DEBAF50C.Up2Date
 C:\Projects\ShoppingCartApp\obj\Debug\net8.0\ShoppingCartApp.sourcelink.json
+C:\Projects\ShoppingCartApp\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll

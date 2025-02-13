@@ -14,7 +14,6 @@ public class Product
     
     public string ProductImage { get; set; }
 
-    // Nueva propiedad para la descripción del chocolate
     [Required]
     public string Description { get; set; }
 }

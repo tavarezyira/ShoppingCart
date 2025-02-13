@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "LD6FwiPUPLQDMrN7vTc5VhauEGLfKaO6HFPMO0NkWf4=",
+  "Hash": "QYK+jMbOBJ7CshTiRp/V01TBJYB0rPMgMK4J27idegg=",
   "Source": "ShoppingCartApp",
   "BasePath": "_content/ShoppingCartApp",
   "Mode": "Default",
@@ -224,6 +224,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\milk_90431316-f493-45cc-9cc7-af61c7a8e22b.jpg"
+    },
+    {
+      "Identity": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\milk_e65a9a9e-794b-4ecc-a56b-bea3f239e487.jpg",
+      "SourceId": "ShoppingCartApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\ShoppingCartApp\\wwwroot\\",
+      "BasePath": "_content/ShoppingCartApp",
+      "RelativePath": "images/milk_e65a9a9e-794b-4ecc-a56b-bea3f239e487.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\milk_e65a9a9e-794b-4ecc-a56b-bea3f239e487.jpg"
     },
     {
       "Identity": "C:\\Projects\\ShoppingCartApp\\wwwroot\\images\\products.jpg",

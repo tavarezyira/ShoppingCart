@@ -1,37 +1,25 @@
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShoppingCartApp.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class CartCountViewComponent : ViewComponent
 {
-    private readonly CartService _cartService;
-
-    public CartCountViewComponent(CartService cartService)
-    {
-        _cartService = cartService;
-    }
-
-    public IViewComponentResult Invoke()
-    {
-        var userId = User.Identity.Name; // Or however you identify the user
-        string count = _cartService.GetCartItemCount();
-       // string viewCount = count as String;
-        return View("Default", count);
-    }
-}
-
-public class CartService
-{
     private readonly ApplicationDbContext _context;
 
-    public CartService(ApplicationDbContext context)
+    public CartCountViewComponent(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public string GetCartItemCount()
+    public async Task<IViewComponentResult> InvokeAsync()
     {
-        int count = _context.Items.Count();
-        string countString = count.ToString();
-        return countString;
+        var userEmail = User.Identity?.Name;
+        int count = await _context.Items
+            .Where(i => i.UserEmail == userEmail)
+            .SumAsync(i => i.Quantity);
+
+        return View("Default", count.ToString());
     }
 }

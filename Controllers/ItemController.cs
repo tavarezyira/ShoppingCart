@@ -1,160 +1,160 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using ShoppingCartApp.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using ShoppingCartApp.Models;
-using System;
 
-public class ItemController : Controller
+namespace ShoppingCartApp.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public ItemController(ApplicationDbContext context)
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+    public class ItemController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // GET: Items
-    public async Task<IActionResult> Index()
-    {
-         var items = await _context.Items
-            .Include(i => i.Product)
-            .ToListAsync();
-
-        return View(items);
-    }
-    
-    // GET: Items/Create (para agregar un producto al carrito)
-    public IActionResult Create(int? productId)
-    {
-        if (productId == null)
+        public ItemController(ApplicationDbContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        var product = _context.Products.Find(productId);
-        if (product == null)
+        // --- Display Cart ---
+        public async Task<IActionResult> Index()
         {
-            return NotFound();
+            var userEmail = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return RedirectToAction("CustomerLogin", "Account");
+            }
+
+            var cartItems = await _context.Items
+                .Include(i => i.Product)
+                .Where(i => i.UserEmail == userEmail)
+                .ToListAsync();
+
+            return View(cartItems);
         }
 
-        var itemViewModel = new Item
+        // --- Select Quantity Before Adding to Cart ---
+        public async Task<IActionResult> Create(int productId)
         {
-            Name = product.ProductName,
-            Price = product.Price,
-            ProductId = product.Id,
-            Product = product,
-            Quantity = 1
-        };
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("CustomerLogin", "Account");
+            }
 
-        return View(itemViewModel);
-    }
-
-    // POST: Item/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Item item)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Add(item);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-            
-        return View(item);
-    }
-
-    // GET: Items/Edit/5
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var item = await _context.Items.Include(i => i.Product).FirstOrDefaultAsync(m => m.Id == id);
-        if (item == null)
-        {
-            return NotFound();
-        }
-
-        return View(item);
-    }
-
-    // POST: Items/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Quantity,Price,ProductId")] Item item)
-    {
-        if (id != item.Id)
-        {
-            return NotFound();
-        }
-
-        if(item.Product == null)
-        {
-            var product = _context.Products.Find(item.ProductId);
+            var product = await _context.Products.FindAsync(productId);
             if (product == null)
             {
                 return NotFound();
             }
+
+            var cartItem = new Item
+            {
+                ProductId = productId,
+                Name = product.ProductName,
+                Price = product.Price,
+                Quantity = 1 // Default value
+            };
+
+            return View(cartItem); // Redirects to Create.cshtml where user can set quantity
+        }
+
+        // --- Add Item to Cart ---
+        [HttpPost]
+        public async Task<IActionResult> Create(Item item)
+        {
+            var userEmail = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return RedirectToAction("CustomerLogin", "Account");
+            }
+
+            var product = await _context.Products.FindAsync(item.ProductId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var existingCartItem = await _context.Items
+                .FirstOrDefaultAsync(i => i.ProductId == item.ProductId && i.UserEmail == userEmail);
+
+            if (existingCartItem != null)
+            {
+                existingCartItem.Quantity += item.Quantity;
+            }
             else
             {
-                item.Product = product;
-                ModelState.Remove("Product");
+                item.UserEmail = userEmail;
+                _context.Items.Add(item);
             }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
-        if (ModelState.IsValid)
+        // --- Edit Item in Cart ---
+        public async Task<IActionResult> Edit(int id)
         {
-            try
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
             {
-                _context.Update(item);
+                return RedirectToAction("CustomerLogin", "Account");
+            }
+
+            var cartItem = await _context.Items.FindAsync(id);
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+            return View(cartItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Item item)
+        {
+            if (id != item.Id)
+            {
+                return NotFound();
+            }
+
+            var cartItem = await _context.Items.FindAsync(id);
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+
+            cartItem.Quantity = item.Quantity;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        // --- Delete Item from Cart ---
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("CustomerLogin", "Account");
+            }
+
+            var cartItem = await _context.Items.FindAsync(id);
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+            return View(cartItem);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cartItem = await _context.Items.FindAsync(id);
+            if (cartItem != null)
+            {
+                _context.Items.Remove(cartItem);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Items.Any(e => e.Id == item.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
-        return View(item);
-    }
-
-    // GET: Items/Delete/5
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var item = await _context.Items.FirstOrDefaultAsync(m => m.Id == id);
-        if (item == null)
-        {
-            return NotFound();
-        }
-
-        return View(item);
-    }
-
-    // POST: Items/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var item = await _context.Items.FindAsync(id);
-        _context.Items.Remove(item);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
     }
 }

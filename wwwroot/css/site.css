@@ -1,148 +1,213 @@
-/* 🔹 Ajuste del tamaño de fuente general */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f8f9fa;
-  font-size: 14px; /* Reducimos la fuente global */
+  font-family: "Merriweather", serif;
+  background: linear-gradient(to right, #f5f1e9, #f7ebe1);
+  color: #3d2c2e;
+  font-size: 15px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* 🔹 Tamaños más compactos para títulos */
-h1,
-h2,
-h3 {
-  color: #343a40;
-  font-size: 20px; /* Reduce el tamaño de los títulos */
+h2 {
+  font-family: "Playfair Display", serif;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* 🔹 Navbar más compacta */
+h1,
+h3 {
+  font-family: "Playfair Display", serif;
+  color: #443434;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .navbar {
-  background-color: #007bff !important;
-  padding: 8px 16px; /* Reduce el padding para hacerla más delgada */
+  background: linear-gradient(to right, #6b4f4f, #5a3e36);
+  padding: 10px 20px;
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
-  color: white !important;
+  font-family: "Playfair Display", serif;
+  color: #f8f9fa !important;
+  letter-spacing: 1px;
 }
 
-/* 🔹 Ajustar la tabla para evitar que ocupe mucho espacio */
-.table {
-  font-size: 14px; /* Reduce la fuente dentro de la tabla */
-  max-width: 100%;
-}
-
-/* 🔹 Hacer que la tabla tenga scroll cuando hay muchos productos */
-.table-responsive {
-  max-height: 70vh; /* Hace que la tabla no se pase del tamaño de la pantalla */
-  overflow-y: auto; /* Agrega scroll vertical cuando hay demasiados elementos */
-}
-
-/* 🔹 Ajuste del tamaño de las imágenes en la tabla */
-.table img {
-  max-width: 60px; /* Reduce el tamaño de las imágenes en la tabla */
-  height: auto;
-}
-
-/* 🔹 Ajuste de botones más compactos */
-.btn {
-  padding: 5px 10px; /* Reduce el tamaño del botón */
-  font-size: 12px;
-}
-
-/* 🔹 Mejorar apariencia de botones primarios */
-.btn-primary {
-  background-color: #007bff !important;
-  border-radius: 5px;
+.navbar-nav .nav-link {
+  color: #f8f9fa !important;
+  font-size: 14px;
   transition: 0.3s;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3 !important;
-  transform: scale(1.05);
+.navbar-nav .nav-link:hover {
+  color: #f4d35e !important;
+  text-shadow: 0px 0px 5px rgba(244, 211, 94, 0.8);
 }
 
-/* 🔹 Mejorar botones de edición y eliminación */
-.btn-warning {
-  background-color: #ffc107 !important;
+.btn {
+  padding: 8px 12px;
+  font-size: 13px;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
 }
 
-.btn-warning:hover {
-  background-color: #e0a800 !important;
-  transform: scale(1.05);
-}
-
-.btn-danger {
-  background-color: #dc3545 !important;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn-danger:hover {
-  background-color: #c82333 !important;
-  transform: scale(1.05);
-}
-
-/* 🔹 Ajustar las tarjetas de productos en Home */
-.card {
+.btn-primary {
+  background-color: #af8260 !important;
   border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-  max-width: 250px; /* Limita el ancho de las tarjetas */
+}
+
+.btn-primary:hover {
+  background-color: #926c4d !important;
+  transform: scale(1.05);
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  background-color: #fff8ee;
+  border: 1px solid #c7a17a;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* 🔹 Ajustar la imagen de las tarjetas */
 .card img {
-  height: 120px; /* Reduce el tamaño de las imágenes dentro de las tarjetas */
+  height: 160px;
   object-fit: cover;
+  border-bottom: 2px solid #c7a17a;
+  transition: opacity 0.3s ease-in-out;
 }
 
-/* 🔹 Contenedores con Scroll en Create, Edit y Delete */
-.container {
-  max-height: 80vh;
-  overflow-y: auto;
-  padding-bottom: 20px;
+.card:hover img {
+  opacity: 0.9;
 }
 
-/* 🔹 Ajustar el tamaño de las imágenes en Create, Edit y Delete */
-.card img {
-  max-width: 200px;
-  margin: 10px auto;
-}
-
-/* 🔹 Footer más compacto */
-footer {
-  background: #343a40;
-  color: white;
-  padding: 5px;
-  font-size: 10px;
+.card-body {
+  padding: 12px;
   text-align: center;
-  margin-top: auto;
-  position: relative;
-  bottom: 0;
+}
+
+.table {
+  font-size: 14px;
+  border: 1px solid #c7a17a;
+  background-color: #fff;
+}
+
+.table th {
+  background-color: #af8260;
+  color: white;
+  font-size: 15px;
+}
+
+.table img {
+  max-width: 55px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.table-responsive {
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.auth-form-container {
+  max-width: 580px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff8ee;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+  border: 2px solid #c7a17a;
+}
+
+.auth-form-container h2 {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: white !important;
+  background-color: #3d2c2e !important;
+  padding: 15px;
+  border-radius: 6px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+.auth-form-container label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #3d2c2e;
+  display: block;
+  text-align: left !important;
+  margin-bottom: 5px;
+}
+
+.auth-form-container input {
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #c7a17a;
+  border-radius: 5px;
   width: 100%;
 }
 
-/* 🔹 Asegurar que el contenido no sea tapado por el footer */
-.container-fluid {
-  flex: 1;
+.auth-form-container .btn {
+  width: 100%;
+  font-size: 14px;
 }
 
-/* 🔹 Asegurar que la tabla se adapte a pantallas pequeñas */
-@media (max-width: 768px) {
-  .table-responsive {
-    max-height: 50vh; /* Reduce el tamaño en dispositivos pequeños */
+footer {
+  background: #3d2c2e;
+  color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .products-container {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .container {
-    max-height: 70vh;
+  .auth-form-container {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .auth-form-container {
+    max-width: 100%;
+    padding: 18px;
+  }
+
+  .table-responsive {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    grid-template-columns: 1fr;
   }
 }

@@ -2,44 +2,34 @@
 @model IEnumerable<ShoppingCartApp.Models.Product>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Tienda de Chocolates";
 }
 
-<div class="container-fluid mt-4">
-    <h1 class="text-center text-primary fw-bold" style="font-size: 24px;">Welcome To My Online Shop</h1>
-    
-    <div class="text-center mb-3">
-        <img src="~/images/shoppingMain.jpg" alt="Main Shopping Image" class="img-fluid rounded shadow" style="max-width: 350px;">
-    </div>
-
-    <!-- Contenedor con Scroll para la Tabla -->
-    <div class="table-responsive" style="max-height: 70vh; overflow-y: auto;">
-        <table class="table table-bordered shadow">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th class="text-center">Image</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var product in Model)
-                {
-                    <tr>
-                        <td class="text-center">
-                            <img src="@product.ProductImage" alt="@product.ProductName" class="img-fluid rounded" style="max-width: 60px; height: auto;">
-                        </td>
-                        <td class="align-middle">@product.ProductName</td>
-                        <td class="align-middle text-success fw-bold">@product.Price.ToString("C", new CultureInfo("en-US"))</td>
-                        <td class="align-middle text-center">
-                            <a asp-action="Create" asp-controller="Item" asp-route-productId="@product.Id" class="btn btn-primary btn-sm">
-                                🛒 Add to Cart
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="container mt-4">
+    <h1 class="text-center text-primary fw-bold">Antique Store</h1>
+    <div class="row row-cols-1 row-cols-md-4 g-3">  <!-- Changed from 3 to 4 columns and reduced gap -->
+        @foreach (var product in Model.Take(9))
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@product.ProductImage" class="card-img-top" alt="@product.ProductName" style="height: 180px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.ProductName</h5>
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text fw-bold text-success">
+                            @product.Price.ToString("C", new CultureInfo("en-US"))
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a asp-action="Create" asp-controller="Item" asp-route-productId="@product.Id" class="btn btn-primary btn-sm">
+                            🛒 Add to Cart
+                        </a>
+                        <a asp-action="AddToWishlist" asp-controller="Wishlist" asp-route-productId="@product.Id" class="btn btn-outline-danger btn-sm">
+                            ❤️
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>

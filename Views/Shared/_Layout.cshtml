@@ -3,34 +3,61 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ShoppingCartApp</title>
+    <title>Antique Store</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ShoppingCartApp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">🛒 My Shopping App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Product" asp-action="Index">Manage Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Item" asp-action="Index">
-                            🛒 My Cart (<span id="cart-count">@await Component.InvokeAsync("CartCount")</span>)
-                        </a>
-                    </li>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Antique Store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Item" asp-action="Index">
+                                🛒 My Cart (<span id="cart-count">@await Component.InvokeAsync("CartCount")</span>)
+                            </a>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-controller="Product" asp-action="Index">Admin Panel</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-controller="Wishlist" asp-action="Index">Wishlist</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="CustomerLogin">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="CustomerRegister">Sign Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-warning fw-bold" asp-controller="Account" asp-action="AdminLogin">Admin Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -44,29 +71,15 @@
     </div>
 
     <footer class="footer text-white bg-dark text-center p-3 mt-4">
-    <div class="container">
-        &copy; 2024 - ShoppingCartApp | <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
-    </div>
-
+        <div class="container">
+            &copy; 2024 - Antique Store | <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@if (TempData["Message"] != null)
-{
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '@TempData["Message"]',
-            timer: 2000,
-            showConfirmButton: false
-        });
-    </script>
-}
-
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

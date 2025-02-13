@@ -4,29 +4,34 @@ using ShoppingCartApp.Models;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace ShoppingCartApp.Controllers;
-
-public class PurchaseController : Controller
+namespace ShoppingCartApp.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public PurchaseController(ApplicationDbContext context)
+    public class PurchaseController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    public async Task<IActionResult> History()
-    {
-        var userId = User.Identity?.Name;
-        if (string.IsNullOrEmpty(userId))
-            return RedirectToAction("Login", "Account");
+        public PurchaseController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-        var history = await _context.PurchaseHistories
-            .Include(ph => ph.PurchaseItems)
-                .ThenInclude(pi => pi.Product)
-            .Where(ph => ph.UserId == userId)
-            .ToListAsync();
+        // Show customer's history
+        public async Task<IActionResult> History()
+        {
+            var userId = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-        return View(history);
+            var history = await _context.PurchaseHistories
+                .Include(ph => ph.PurchaseItems)
+                    .ThenInclude(pi => pi.Product)
+                .Where(ph => ph.UserId == userId)
+                .OrderByDescending(ph => ph.PurchaseDate)
+                .ToListAsync();
+
+            return View(history);
+        }
     }
 }
